@@ -183,7 +183,7 @@ Dort fügen wir folgende Zeile ein und speichern diese mit STRG+O:
 
 Download der Dateien von github in den Ordner ~/dxlAPRS/aprs:
 
-	  git clone https://github.com/dl1nux/dxlAPRS-SDR-iGate.git ~/dxlAPRS/aprs
+	  git clone https://github.com/dl1nux/dxlAPRS-radiosonde-rx.git ~/dxlAPRS/aprs
 	
 Sollten die Dateien im falschen Ordner landen, einfach alles in den aprs
 Programmordner kopieren oder verschieben.
