@@ -173,11 +173,11 @@ vielfältigen Problemen führen kann, geben wir den normalen Benutzern mit
 folgenden Schritten die benötigten Rechte, um auf den USB SDR-Stick zugreifen 
 zu können:
 
-   sudo nano /etc/udev/rules.d/20.rtlsdr.rules
+    sudo nano /etc/udev/rules.d/20.rtlsdr.rules
 
 Dort fügen wir folgende Zeile ein und speichern diese mit STRG+O:
 
-   SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838",GROUP="adm", MODE="0666", SYMLINK+="rtl_sdr"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838",GROUP="adm", MODE="0666", SYMLINK+="rtl_sdr"
 
 4. Beispielskript und -dateien herunterladen und ggf. in den APRS Ordner kopieren
 
@@ -319,13 +319,13 @@ aus:
 
 So sehen die erzeugten APRS-Pakete beispielsweise aus:
 
-DL1NUX-11>APLWS2:;P3340619 *174008h4927.18N/01232.40EO112/027/A=056331!wbA!
-Clb=6.0m/s Type=RS41 rssi=68.5dB dist=270.218 azimuth=107 elevation=2.34 
-rx=402700(+0/5)
+    DL1NUX-11>APLWS2:;P3340619 *174008h4927.18N/01232.40EO112/027/A=056331!wbA!
+    Clb=6.0m/s Type=RS41 rssi=68.5dB dist=270.218 azimuth=107 elevation=2.34 
+    rx=402700(+0/5)
 
-DL1NUX-11>APLWS2:;P3340619 *174028h4927.14N/01232.56EO107/021/A=056650!wbb!
-Clb=4.6m/s Type=RS41-SGP Sats=11 powerup h:m:s 01:08:51 sondemod 1.36 
-rx=402700(+0/5)
+    DL1NUX-11>APLWS2:;P3340619 *174028h4927.14N/01232.56EO107/021/A=056650!wbb!
+    Clb=4.6m/s Type=RS41-SGP Sats=11 powerup h:m:s 01:08:51 sondemod 1.36 
+    rx=402700(+0/5)
 
 8. Programm und Dateipfade anpassen
 
