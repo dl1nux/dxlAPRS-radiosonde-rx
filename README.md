@@ -227,12 +227,6 @@ im APRS Ordner abgelegt werden (dafür den Befehl idealerweise direkt aus
 
     wget https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/binary/WW15MGH.DAC
 
-Alle Programmdateien, Skripte und Textdateien sollten sich der Einfachheit
-halber im selben Verzeichnis befinden. Auf dem RaspberryPi wäre das 
-idealerweise das Verzeichnis  /home/pi/dxlAPRS/aprs . Alle weiteren Anweisungen
-setzen voraus dass man sich in diesem Programmordner befindet. Bei Abweichungen
-bitte entsprechend anpassen.
-
 6. Optional: SRTM Höhendaten im System hinterlegen
 
 Wenn man SRTM Datenfiles hat, kann das iGate udpgate4 diese nutzen um die Höhen
@@ -241,8 +235,14 @@ der Sonden über Grund im Webinterface anzuzeigen. Dazu muss im Ordner
 abgelegt werden. Bei udpdate4 muss im Aufruf der Parameter -A <Pfad zu /srtm1>
 hinzugefügt werden. Die Startskripte enthalten am Ende eine Extrazeile
 in der dieser Parameter bereits integriert ist. Dafür muss dann die "normale"
-udpgate4 zeile auskommentiert und die andere einkommentiert werden.
+udpgate4 Zeile auskommentiert und die andere einkommentiert werden.
 Der /srtm1 Ordner sollte sich idealerweise im ~/dxlAPRS/aprs/ Ordner befinden.
+
+Alle Programmdateien, Skripte und Textdateien sollten sich der Einfachheit
+halber im selben Verzeichnis befinden. Auf dem RaspberryPi wäre das 
+idealerweise das Verzeichnis  /home/pi/dxlAPRS/aprs . Alle weiteren Anweisungen
+setzen voraus dass man sich in diesem Programmordner befindet. Bei Abweichungen
+bitte entsprechend anpassen.
 
 # Vor dem ersten Start beachten
 
