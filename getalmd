@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# by signal file from sondemod triggered almanach download daemon
+# start in sondemod work dir
+
+ALMFN="e.txt"
+SIGFN="getalmanach"
+TEMP="/tmp";
+EXT=".Z";
+
+while true; do
+  if [ -e $SIGFN ] || ! [ -e $TEMP/$ALMFN ] ; then
+    DAY=`date -u +%j`
+    YEAR=`date -u +%y`
+    echo day:$DAY year:$YEAR
+    FN=brdc`echo -n $DAY`0.`echo -n $YEAR`n
+    FNU=BRDC`echo -n $DAY`0.`echo -n $YEAR`n
+    PD=$PWD
+    cd $TEMP
+    rm -f $TEMP/$FN
+#    wget http://qz-vision.jaxa.jp/USE/archives/ephemeris//20$YEAR/$FN
+#    if [ -s $TEMP/$FN ] ; then
+#      echo jaxa ok
+#    else
+#      wget ftp://www.ngs.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
+
+#    wget ftp://alt.ngs.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
+#    if [ -s $TEMP/$FN.gz ] ; then
+#      echo noaa alt ok
+#      gunzip $TEMP/$FN.gz
+    wget ftp://cddis.gsfc.nasa.gov/gnss/data/daily/20$YEAR/brdc/$FN$EXT
+    if [ -s $TEMP/$FN$EXT ] ; then
+      echo noaa alt ok
+      gunzip $TEMP/$FN$EXT
+
+    else
+
+      wget ftp://geodesy.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
+      if [ -s $TEMP/$FN.gz ] ; then
+        echo noaa ok
+        gunzip $TEMP/$FN.gz
+      fi
+
+
+
+#        wget ftp://igs.bkg.bund.de/IGS/BRDC/20$YEAR/$DAY/$FN.Z
+#        if [ -s $TEMP/$FN.Z ] ; then
+#          echo bund ok
+#          gunzip $TEMP/$FN.Z
+
+
+
+
+#        else
+#          wget ftp://ftp.glonass-iac.ru/MCC/BRDC/20$YEAR/$FNU
+#          if [ -s $TEMP/$FNU ] ; then
+#            echo ru ok
+#            mv $TEMP/$FNU $TEMP/$FN
+
+    fi
+
+    cd $PD 
+
+    if [ -s $TEMP/$FN ] ; then
+      mv $TEMP/$FN $TEMP/$ALMFN
+      rm -f $SIGFN
+      if [ -e $SIGFN ] ; then
+        echo getalmanach file not deletable
+        exit
+      fi
+      sleep 1800
+    else 
+      echo download failed
+      sleep 300
+    fi
+  else
+    sleep 10
+  fi 
+done

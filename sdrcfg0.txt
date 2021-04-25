@@ -1,0 +1,60 @@
+#-----------------------------------------------------------------------------------------------------
+# sdrcfg0.txt - von DL1NUX 14.04.2020: Keine Tab-Stops bei der Nutzung von Auskommentierungen (#)!!!
+# Diese Datei ggf. je nach anzahl der verwendeten Sticks kopieren und durchnummerieren: sdrcfg0.txt, sdrcfg1.txt usw.
+# Original von OE3OSB
+#-----------------------------------------------------------------------------------------------------
+# 
+#  p <cmd> <value>  rtl_tcp parameter like 'p 5 50' ppm, 'p 8 1' autogain on
+#  f <mhz> <AFC-range> <squelch%> <lowpass%>  <IF-width>  FM Demodulator
+#  a <mhz>  0          <squelch%> <lowpass%>  <IF-width>  AM Demodulator
+#  u <mhz> <IF-shift>   0         <agc speed> <IF-width>  USB Demodulator
+#  l same for LSB
+#    AFC-Bereich in +-kHz, Squelch 0 aus, 100 offen, 70 ist normal
+#    Audio Tiefpass in % Nyquist Ausgabefrequenz Sampelrate, 0 is aus
+#    IF-width 3000 6000 12000 24000 48000 96000 192000Hz für wenig CPU Auslastung
+#    (192000 nur mit >=2048khz iq-rate), (4th order IIR)
+#    (SSB 8th order IF-IIR), Andere Werte haben mehr CPU-Last (12000 default)
+#-----------------------------------------------------------------------------------------------------
+# Parameter für SDR Stick:
+# p 5 = Frequenz Offset in PPM - Sticks mit TCXO benötigen die syntax p 5 0
+#       Bei allen anderen Sticks ohne TCXO muss die Frequenzabweichung in PPM berechnet werden
+#       z.B.: https://github.com/ptrkrysik/gr-gsm/wiki/Installation-on-RaspberryPi-3
+#       Wenn Ihnen die PPM für den Stick bekannt ist, hängen Sie ihn hier an: p 5 ppm
+#       Korrekte Syntax für ppm 50 ist p 5 50
+p 5 0
+#
+# p 8 = Automatic Gain Control (AGC) 
+#      p 8 1 = AGC an  / p 8 0 = AGC aus
+p 8 1
+#-----------------------------------------------------------------------------------------------------
+# Einstellen der Sondenfrequenz(en) (Wichtig: Als MHz-Trennung einen Punkt verwenden, und KEIN Komma (403.0 anstatt 403,0)
+# f <mhz> <AFC-range> <squelch%> <lowpass%>  <IF-width>
+# f 405.31 5 65 0 6000    # Einstellung für DFM Sonden
+# f 402.70 5 70 0 12000   # Einstellung für Sonstige Sonden (RS41, RS92 etc.)
+# f 403.00 8 80 0 20000   # Einstellung für M10 Sonden
+# Bei M10 Empfang unbedingt auch die Samplerate bei sdrtst und sondeudp auf 25 KHz erhöhen!
+#-----------------------------------------------------------------------------------------------------
+# Wichtig: Die SDR Sticks haben nur etwa 2 MHz Bandbreite!
+# Wenn Sie mehrere Frequenzen überwachen, sollten diese nicht mehr wie 2 MHz auseinander liegen
+# Bei den gewünschten Frequenzen die Auskommentierung "#" entfernen. 
+# Frequenzen können nach Bedarf ergänzt oder angepasst werden.
+# Auf einem RaspberryPi können locker 8 Frequenzen pro SDR-Stick gleichzeitig überwacht werden (bei 2 Sticks) (abhängig von CPU-Leistung!)
+
+# f 402.300 5 70 0 12000
+# f 402.500 5 70 0 12000
+# f 402.700 5 70 0 12000
+# f 402.900 5 70 0 12000
+# f 403.000 5 70 0 12000
+# f 403.800 5 70 0 12000
+# f 403.900 5 70 0 12000
+# f 404.100 5 70 0 12000
+# f 404.400 5 70 0 12000
+# f 404.500 5 70 0 12000
+# f 404.700 5 70 0 12000
+# f 404.900 5 70 0 12000
+# f 405.100 5 70 0 12000
+# f 405.300 5 70 0 12000
+# f 405.500 5 70 0 12000
+# f 405.700 5 70 0 12000
+# f 405.800 5 70 0 12000
+# f 405.900 5 70 0 12000

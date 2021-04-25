@@ -1,0 +1,9 @@
+!5010.00N/01100.00E`Radiosonden iGate von MYCALL
+#
+# Geokoordinaten in Grad und Dezimalminuten ohne °-Symbol
+# Beispiel 50°10.00 N = 5010.00N und 011°00.00 E = 01100.00E
+# Die Ost-Gradzahl muss immer! dreistellig angegeben werden, also 011 bei 11 Grad Ost
+#
+# APRS-Symbol ist änderbar durch ersetzen der Symbolzeichen nach dem N 
+# und nach dem E, siehe auch APRS Symboltabelle unter:
+# https://www.yachttrack.org/info_camper/downloads/APRS_Symbol_Chart.pdf 

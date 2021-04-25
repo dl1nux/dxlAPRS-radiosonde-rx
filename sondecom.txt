@@ -1,0 +1,18 @@
+%d%D%A%E%f
+%s%u%v%f
+#
+# Erklärung der Variablen (Auszug aus sondemod -h)
+#
+# # Kommentar-Zeile, wird ignoriert
+# %A Azimuth from sonde-rx, (-P needed too)
+# %d rssi if received with sdrtst -e
+# %D Distance to sonde-rx, (-P -S needed too with EGM96)
+# %E Elevation to sonde, (-P -S needed too with EGM96)
+# %F same as "f" but send always
+# %f sdr freq+AFC from sdrtst with -e and not (yet) got MHz from sonde
+# %l label given in sondeudp -L eg. "omni" "west" "rx1"
+# %n frame number if avaliable
+# %r hdil if avaliable, gps horizontal noise in meter
+# %s gps sat count if avaliable
+# %u sonde uptime if avaliable
+# %v sondemod version
