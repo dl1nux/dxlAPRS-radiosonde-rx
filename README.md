@@ -157,13 +157,13 @@ http://www.dl1nux.de/dxlaprs-tools-grundinstallation/
 
 SDR-Softwarepaket:
 
-  sudo apt-get install rtl-sdr
+    sudo apt-get install rtl-sdr
 
 Wenn man die Tools in einer grafischen Oberfläche laufen lassen will, empfiehlt
 sich die Nutzung des xfce4-terminal. Es ermöglicht die getrennte Betrachtung der
 Ausgaben der einzelnen Tools und hilft auch oft bei der Fehlersuche ;-)
 
-  sudo apt-get install xfce4-terminal
+    sudo apt-get install xfce4-terminal
 
 3. Bei Bedarf: Zugriffsberechtigungen anpassen
 
@@ -173,17 +173,17 @@ vielfältigen Problemen führen kann, geben wir den normalen Benutzern mit
 folgenden Schritten die benötigten Rechte, um auf den USB SDR-Stick zugreifen 
 zu können:
 
-  sudo nano /etc/udev/rules.d/20.rtlsdr.rules
+   sudo nano /etc/udev/rules.d/20.rtlsdr.rules
 
 Dort fügen wir folgende Zeile ein und speichern diese mit STRG+O:
 
-  SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838",GROUP="adm", MODE="0666", SYMLINK+="rtl_sdr"
+   SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838",GROUP="adm", MODE="0666", SYMLINK+="rtl_sdr"
 
 4. Beispielskript und -dateien herunterladen und ggf. in den APRS Ordner kopieren
 
 Download der Dateien von github in den Ordner ~/dxlAPRS/aprs:
 
-	git clone https://github.com/dl1nux/dxlAPRS-SDR-iGate.git ~/dxlAPRS/aprs
+	  git clone https://github.com/dl1nux/dxlAPRS-SDR-iGate.git ~/dxlAPRS/aprs
 	
 Sollten die Dateien im falschen Ordner landen, einfach alles in den aprs
 Programmordner kopieren oder verschieben.
@@ -217,7 +217,7 @@ Oberfläche betreiben will. Die *.desktop Dateien sind für die PIXEL Oberfläch
 von Raspbian gedacht. Wenn man diese in den Desktop-Ordner kopiert, sieht man
 die entsprechenden Symbole auf dem Desktop und kann diese direkt anklicken:
 
-  cp *.desktop /home/pi/Desktop
+    cp *.desktop /home/pi/Desktop
 
 5. Geoid Datendatei herunterladen
 
@@ -225,7 +225,7 @@ Zuletzt sollte noch die Datendatei für die Geoid-Berechnung geladen werden und
 im APRS Ordner abgelegt werden (dafür den Befehl idealerweise direkt aus 
 ~/dxlAPRS/aprs/ heraus aufrufen)
 
-  wget https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/binary/WW15MGH.DAC
+    wget https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/binary/WW15MGH.DAC
 
 Alle Programmdateien, Skripte und Textdateien sollten sich der Einfachheit
 halber im selben Verzeichnis befinden. Auf dem RaspberryPi wäre das 
@@ -282,7 +282,7 @@ beliebigen APRS-Server senden ohne den Umweg über radiosondy.info.
 Den APRS-Passcode für das eigene Gateway-Rufzeichen trägt man bei UDPGATE4 im
 Parameter -p ein. Dies ist notwendig, da sonst die APRS-Server keine Daten
 entgegen nehmen. Generieren kann man diesen z.B. hier:
-  https://apps.magicbug.co.uk/passcode/
+    https://apps.magicbug.co.uk/passcode/
 
 5. netbeacon.txt
 
@@ -306,8 +306,8 @@ angehängt werden. Man kann mehrere Zeilen definieren, dann werden die Kommentar
 abwechselnd variiert. Zeilen beginnend mit # werden ignoriert. Der mitgelieferte
 Inhalt ist ein Vorschlag der nützliche Informationen mit anzeigt und sendet.
 
-  %d%D%A%E%f
-  %s%u%v%f
+    %d%D%A%E%f
+    %s%u%v%f
 
 Die Beispielvariablen erzeugen zwei sich abwechselnde APRS-Kommentare bestehend
 aus:
@@ -332,7 +332,6 @@ rx=402700(+0/5)
 Falls sich eure Programme und Dateien nicht in /home/pi/dxlAPRS/aprs befinden,
 müsst ihr alle genannten Dateipfade im Skript nachträglich anpassen.
 
-
 # Programmstart
 
 Das Programm kann an der Konsole mit ./sonde.sh bzw. ./sondestandalone.sh
@@ -341,7 +340,6 @@ kann man auch den kompletten Pfad angeben: /home/pi/dxlAPRS/aprs/sonde.sh
 
 Wenn man eine grafische Oberfläche hat, kann man die Skriptdateien auch direkt
 aus einem Dateimanager heraus mit Doppelklick starten.
-
 
 # Autostart
 
@@ -353,11 +351,11 @@ Rechners starten, gibt es folgende Möglichkeiten.
 Es hat sich bewährt das Skript direkt nach dem Hochfahren mit der crontab zu
 starten. Dazu muss die Datei /etc/crontab als root (sudo) editiert werden:
 
-  sudo nano /etc/crontab
+    sudo nano /etc/crontab
 
 Nun fügt man folgenden Eintrag der Tabelle hinzu:
 
-  @reboot pi /home/pi/dxlAPRS/aprs/sondestandalone.sh
+    @reboot pi /home/pi/dxlAPRS/aprs/sondestandalone.sh
 
 "pi" nach dem "@reboot" ist der Benutzer, unter dem das Skript ausgeführt werden
 soll. Es sollte NICHT! als root laufen. Wenn der Dateiname des Skripts 
@@ -377,8 +375,8 @@ APRSMAP zur grafischen Darstellung der Sonden auf einer Karte nutzen.
 Dazu erstellt man erst den autostart Ordner (sofern er noch nicht existiert)
 und kopiert anschließend die sondenstart.desktop Datei hinein.
 
-  mkdir ~/.config/autostart
-  cp sondenstart.desktop /home/pi/.config/autostart
+    mkdir ~/.config/autostart
+    cp sondenstart.desktop /home/pi/.config/autostart
 
 Im grafischen Dateimanager muss ggf. erst die Option "Versteckte anzeigen"
 im Menü "Ansicht" aktiviert werden, damit man den Ordner ~/.config sieht.
@@ -394,9 +392,9 @@ zu kontaktieren. Gerne auch als Kommentar auf der Webseite.
 
 Kontaktmöglichkeiten:
 
-- per E-Mail attila@dl1nux.de
-- per IRC Chat im Hamnet (HamIRCNet) im Kanal #hamnet-oberfranken
-- per Packet-Radio im DL/EU Converse Kanal 501
+* per E-Mail attila@dl1nux.de
+* per IRC Chat im Hamnet (HamIRCNet) im Kanal #hamnet-oberfranken 
+* per Packet-Radio im DL/EU Converse Kanal 501
 
 Die ausführliche Anleitung mit einer Erklärung aller Parameter befindet sich im
 Internet auf meiner Webseite:
