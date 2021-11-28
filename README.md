@@ -9,6 +9,7 @@ Stand 28.11.2021
 * Für wen sind diese Skripte und Dateien geeignet?
 * Welche Wettersonden können empfangen werden?
 * Benötigte Hardware
+* Funktionsweise der vorliegenden Skripte
 * Installationshinweise
 * Vor dem ersten Start beachten
 * Programmstart
@@ -176,7 +177,7 @@ aller Prozesse gedacht (sondestop.sh).
 Wenn der Empfänger läuft, kann man die zwei Webinterfaces der iGates einfach
 im Browser über die Ports 14501 und 14502 aufrufen, z.B.:
 
-    http://192.168.178.66:14501/mh  (Verbindung zu radiosondy.infO)
+    http://192.168.178.66:14501/mh  (Verbindung zu radiosondy.info)
     http://192.168.178.66:14502/mh  (Verbindung zu wettersonde.net)
 
 Natürlich müsst ihr die passende IP-Adresse einsetzen, die euer RaspberryPi
@@ -248,7 +249,7 @@ Das Archiv enthält folgende Dateien:
 * sondeconfig.txt - Enthält die wichigen Variablen für die Konfiguration
 * sondestop.sh - Beendet sofort alle dxlAPRS Prozesse
 
-Das Skript *getalmd* lädt den GPS-Almanach, welcher für RS92 Sonden notwendig 
+Das Skript **getalmd** lädt den GPS-Almanach, welcher für RS92 Sonden notwendig 
 ist. Das Skript funktioniert derzeit jedoch nicht mehr, da sich die Server für
 den Bezug der Daten geändert haben. Aus diesem Grund ist es auch grundsätzlich
 deaktiviert. Falls jemand die richtigen Serverdaten hat, kann er diese im 
@@ -313,7 +314,7 @@ folgenden Schritte bzw. Anpassungen vorgenommen werden:
 Beim Vorhandensein von SRTM Daten in ~/dxlAPRS/aprs/srtm1 werden bei den 
 Parametern ALT* jeweils die Höhen über Grund zugrundegelegt.
 
-*Hinweis:* iGate Rufzeichen und Absenderrufzeichen müssen identisch sein, jedoch
+**Hinweis:** iGate Rufzeichen und Absenderrufzeichen müssen identisch sein, jedoch
 muss sich die SSID der beiden Calls unterscheiden. Also z.B. NOCALL-10 und
 NOCALL-11. Wird dies nicht beachtet, werden die Pakete von der Seite 
 wettersonde.net verworfen.
@@ -331,7 +332,7 @@ werden sollen. Für jeden SDR-Stick muss eine eigene sdrcfg Datei verwendet
 werden, weshalb diese durchnummeriert sind. Wird nur ein Stick verwendet, muss
 die Datei sdrcfg0.txt bearbeitet werden. Bei zwei Sticks die 0 und die 1 und 
 bei drei Stick alle drei. Möchte man hier manuell eingreifen, sind Änderungen
-im Startskript beim Punkt *sdrtst* durchzuführen.
+im Startskript beim Punkt **sdrtst** durchzuführen.
 
 4. Optional: sondecom.txt
 
@@ -344,9 +345,9 @@ Inhalt ist ein Vorschlag der nützliche Informationen mit anzeigt und sendet.
 
 # Programmstart
 
-Das Programm kann an der Konsole mit ./sonde.sh bzw. ./sondestandalone.sh
-gestartet werden. Wenn man sich sich nicht im Programmverzeichnis befinden,
-kann man auch den kompletten Pfad angeben: /home/pi/dxlAPRS/aprs/sonde.sh
+Das Programm kann an der Konsole mit z.B. ./sonde2.sh gestartet werden. Wenn
+man sich sich nicht im Programmverzeichnis befinden, kann man auch den 
+kompletten Pfad angeben: /home/pi/dxlAPRS/aprs/sonde.sh
 
 Wenn man eine grafische Oberfläche hat, kann man die Skriptdateien auch direkt
 aus einem Dateimanager heraus mit Doppelklick starten.
