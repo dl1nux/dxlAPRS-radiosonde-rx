@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Start mit 2 Sticks
+Name=Sonden-RX 2 Sticks
 Exec=/home/pi/dxlAPRS/aprs/sonde2-gui.sh
 Icon=/home/pi/dxlAPRS/aprs/www/icon/163.gif
 Terminal=false
 Type=Application
 StartupNotify=false
 Path=/home/pi/dxlAPRS/aprs/
-Name[de_DE]=Start mit 2 Sticks
+Name[de_DE]=Sonden-RX 2 Sticks
