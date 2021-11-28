@@ -263,7 +263,7 @@ Im Unterordner "Desktop" befinden sich Desktopverknüpfungen für die grafische 
 * aprsmap.desktop - Verknüpfung zu APRSMAP
 
 Man kopiert diese entweder über den Dateimanager in den Ordner ~/Desktop oder
-oder kopiert sie an der Konsole wie folgt
+oder kopiert sie an der Konsole wie folgt:
 
     cp *.desktop ~/Desktop
 
@@ -311,7 +311,7 @@ folgenden Schritte bzw. Anpassungen vorgenommen werden:
 * INTERVALL2 = Sendeintervall in Sekunden für Sonden in der Höhe zwischen HEIGHT2 und HEIGHT3, z.B. 10
 * INTERVALL3 = Häufiges Sendeintervall in Sekunden für Sonden unterhalb der Höhe von HEIGHT3, z.B. 5
 
-Beim Vorhandensein von SRTM Daten in ~/dxlAPRS/aprs/srtm1 werden bei den 
+Beim Vorhandensein von SRTM Daten in ~/dxlAPRS/aprs/srtm1/ werden bei den 
 Parametern ALT* jeweils die Höhen über Grund zugrundegelegt.
 
 **Hinweis:** iGate Rufzeichen und Absenderrufzeichen müssen identisch sein, jedoch
@@ -347,7 +347,7 @@ Inhalt ist ein Vorschlag der nützliche Informationen mit anzeigt und sendet.
 
 Das Programm kann an der Konsole mit z.B. ./sonde2.sh gestartet werden. Wenn
 man sich sich nicht im Programmverzeichnis befinden, kann man auch den 
-kompletten Pfad angeben: /home/pi/dxlAPRS/aprs/sonde.sh
+kompletten Pfad angeben: /home/pi/dxlAPRS/aprs/sonde2.sh
 
 Wenn man eine grafische Oberfläche hat, kann man die Skriptdateien auch direkt
 aus einem Dateimanager heraus mit Doppelklick starten.
