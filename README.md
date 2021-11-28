@@ -1,7 +1,7 @@
 # dxlAPRS-radiosonde-rx
 Wettersonden-Empfänger mit dxlAPRS
 
-Stand 25.04.2021 by DL1NUX (attila@dl1nux.de)
+Stand 28.11.2021
 
 # Inhaltsverzeichnis
 * Einleitung
@@ -19,9 +19,9 @@ Stand 25.04.2021 by DL1NUX (attila@dl1nux.de)
 # Einleitung
 
 Die folgende Anleitung dient dazu in wenigen Schritten einen Wettersonden-
-Empfänger aufzubauen, der seine Daten an die Community-Seite radiosondy.info
-und auch in das APRS-Netzwerk weiterleitet. Selbstverständlich kann man den
-Empfänger auch nur lokal nutzen ohne eine Weiterleitung der Daten.
+Empfänger aufzubauen, der seine Daten an die Community-Seiten radiosondy.info,
+wettersonde.net und auch in das APRS-Netzwerk weiterleitet. Selbstverständlich
+kann man den Empfänger auch nur lokal nutzen ohne eine Weiterleitung der Daten.
 
 dxlAPRS ist eine „Toolchain“ bzw. Programmsammlung für Linux Systeme rund um
 die Betriebsart APRS und wird von Christian OE5DXL entwickelt. Neben
@@ -48,17 +48,16 @@ folgenden Komponenten aus den dxlAPRS Tools benötigt:
 * sondeudp (Sondendekodierung)
 * sondemod (Erzeugung von APRS Paketen aus den Sondendaten)
 * udpgate4 (APRS iGate)
-* Optional: udpbox (Verfielfältigung der AXUDP Streams)
+* udpbox (Verfielfältigung der AXUDP Streams)
 
-rtl_tcp stellt einen SDR Server bereit. sdrtst zapt diesen SDR Server an und
+rtl_tcp stellt einen SDR Server bereit. sdrtst zapft diesen SDR Server an und
 erzeugt Empfänger auf den vorgegebenen Frequenzen (sdrcfg0.txt). sdrtst sendet
 die empfangenen Signale in eine Audiopipe, an dessen Ende sondeudp arbeitet.
 sondeudp dekodiert empfangene Sondensignale und sendet die Rohdaten an 
 sondemod. sondemod wiederrum erzeugt aus den Sondendaten konforme APRS-Pakete
-als APRS-Objekt und sendet diese entweder an das iGate udpgate4 zur 
-Weiterleitung ins Internet, oder vorher noch an udpbox, wo sie verfielfältigt
-werden können um die Pakete zeitgleich noch in einem Kartenprogramm, z.B.
-ARPSMAP, darstellen zu können (optional).
+als APRS-Objekte und sendet diese an udpbox. Dort werden sie verfielfältigt 
+um die erzeugten Pakete zeitgleich an zwei Server und ggf. noch an das 
+Kartenprogramm APRSMAP schicken zu können.
 
 # Hinweise für den Empfang von Wettersonden
 
@@ -101,6 +100,12 @@ neue Frequenzen zu finden. Insbesondere ist dies bei DFM Sonden ein Problem, da
 deren Frequenzen immer anders sind und auch nicht vorhergesagt werden können.
 Die dxlAPRS Tools sind in der Lage die Signale dieser Sonden zu dekodieren,
 jedoch nur wenn man die Frequenzen händisch einpflegt.
+
+Von Wolfgang Hallmann DF7PN gibt es eine Anwendung, mit der man an einem extra
+Stick die Frequenzen regelmäßig abscannen kann um damit Sonden auf unbekannten
+Frequenzen zu finden. Mit etwas Geschick und viel Wissen kann man den 
+die vorliegenden Scripte auch mit dem Sondenscanner ergänzen.
+Weitere Infos: https://github.com/whallmann/SondenUtils
 
 Für den Empfang von Sonden des Typs M10 sind Änderungen an der Konfiguration
 notwendig. Die Samplerate bei sdrtst und sondeudp muss dann mindestens 20000 Hz
@@ -146,24 +151,62 @@ Großbritannien bekommt man ein solches Fertiggerät mit Filter und Vorverstärk
 in einem schönen Alu-Gehäuse. Es kursieren aber auch Bauanleitungen für solche
 Filter und Vorverstärker im internet.
 
+# Funktionsweise der vorliegenden Skripte
+
+Die Skripte empfangen und dekodieren die Daten der Wettersonden. Daraus werden
+APRS-Pakete (APRS-Objekte) erzeugt. Diese APRS Pakete werden dann an zwei 
+Server gleichzeitig gesendet. Einmal an radiosondy.info von Michal SQ6KXY, und
+dann nochmal an wettersonde.net von Jean-Michael DO2JMG. Zusätzlich können die
+Daten noch mit APRSMAP auf einer Karte dargestellt werden.
+
+Die meisten Parameter müssen in der Datei sondeconfig.txt eingetragen werden.
+Diese Datei wird von jedem Skript zu Beginn eingelesen und die enthaltenen
+Variablen an den richtigen Stellen eingefügt. Dadurch ist es möglich mit nur
+einer Konfigurationsdatei alle Skripte zu verwenden. Die verschiedenen Skripte
+müssen nicht mehr alle einzeln angepasst werden.
+
+Darüberhinaus sind natürlich noch manuelle Anpassungen an den Skripten erlaubt.
+
+Es sind insgesamt Sieben Skripte enthalten. Drei Startskripte für den 
+Konsolenbetrieb ohne grafische Oberfläche, und drei für die Nutzung in der
+grafischen Oberfläche (*-gui.sh). Diese sind jeweils für die Nutzung von ein,
+zwei oder drei Sticks parallel gedacht. Ein weiteres Skript ist zum stoppen
+aller Prozesse gedacht (sondestop.sh).
+
+Wenn der Empfänger läuft, kann man die zwei Webinterfaces der iGates einfach
+im Browser über die Ports 14501 und 14502 aufrufen, z.B.:
+
+    http://192.168.178.66:14501/mh  (Verbindung zu radiosondy.infO)
+    http://192.168.178.66:14502/mh  (Verbindung zu wettersonde.net)
+
+Natürlich müsst ihr die passende IP-Adresse einsetzen, die euer RaspberryPi
+bzw. Rechner im Netzwerk hat.
+
+Im Webinterface sieht man dann nach einiger Zeit die Empfangenen Sonden mit all
+ihren Daten aus den letzten 48 Stunden. Die Zeitspanne der Anzeige lässt sich 
+auch bei Bedarf in den Startskripten händisch anpassen (-B beim udpgate4).
+
 # Installationshinweise  (Nicht notwendig für Nutzer des fertigen Images!)
 
 1. dxlAPRS installieren
 
-Installieren Sie die dxlAPRS Tools gemäß folgender Anleitung:
-http://www.dl1nux.de/dxlaprs-tools-grundinstallation/
+Installiert die dxlAPRS Tools gemäß folgender Anleitung:
+http://dxlwiki.dl1nux.de/index.php?title=Installationsanleitung
+
+Führt anschließend noch ein Update mit dem Updateskript dxl-update.sh durch.
+Siehe auch: https://github.com/dl1nux/dxlAPRS-update
 
 2. Zusätzliche Pakete installieren
 
 SDR-Softwarepaket:
 
-    sudo apt-get install rtl-sdr
+    sudo apt install rtl-sdr
 
 Wenn man die Tools in einer grafischen Oberfläche laufen lassen will, empfiehlt
 sich die Nutzung des xfce4-terminal. Es ermöglicht die getrennte Betrachtung der
 Ausgaben der einzelnen Tools und hilft auch oft bei der Fehlersuche ;-)
 
-    sudo apt-get install xfce4-terminal
+    sudo apt install xfce4-terminal
 
 3. Bei Bedarf: Zugriffsberechtigungen anpassen
 
@@ -189,40 +232,44 @@ Sollten die Dateien im falschen Ordner landen, einfach alles in den aprs
 Programmordner kopieren oder verschieben.
 
 Das Archiv enthält folgende Dateien:
-* sonde.sh - Startskript für ein System MIT grafischer Oberfläche
-* sondestandalone.sh - Startskript für ein Standalone-System OHNE grafischer Oberfläche
-* sondenstop.sh - Beendet sofort alle dxlAPRS Prozesse
-* sdrcfg0.txt - Musterdatei für die Sonden-Empfangsfrequenzen
-* sdrcfg1.txt - Musterdatei für die Sonden-Empfangsfrequenzen
-* sdrcfg2.txt - Musterdatei für die Sonden-Empfangsfrequenzen
-* sondecom.txt - Enthält die Variablen für den APRS-Kommentartext
+* getalmd - Bash Skript von OE5DXL zum Laden des GPS Almanach für RS92 Sonden
 * netbeacon.txt - Defniert die APRS-Bake für den Empfänger ins APRS-IS Netzwerk
 * README.md - Diese Infodatei
-* sondenstart.desktop - Verknüpfung zu Sondenstart-Skript (für Desktop und Autostart)
-* sondenstop.desktop - Verknüpfung zu Sondenstop-Skript (für Desktop)
-* aprsmap.desktop - Verknüpfung zu APRSMAP (für Desktop)
-* getalmd - Bash Skript von OE5DXL zum Laden des GPS Almanach für RS92 Sonden
+* sdrcfg0.txt - Musterdatei für die Sonden-Empfangsfrequenzen für den 1. Stick
+* sdrcfg1.txt - Musterdatei für die Sonden-Empfangsfrequenzen für den 2. Stick
+* sdrcfg2.txt - Musterdatei für die Sonden-Empfangsfrequenzen für den 3. Stick
+* sonde1.sh - Startskript für ein System ohne grafischer Oberfläche und EINEM Stick
+* sonde2.sh - Startskript für ein System ohne grafischer Oberfläche und ZWEI Sticks
+* sonde3.sh - Startskript für ein System ohne grafischer Oberfläche und DREI Sticks
+* sonde1-gui.sh - Startskript für ein System mit grafischer Oberfläche und EINEM Stick
+* sonde2-gui.sh - Startskript für ein System mit grafischer Oberfläche und ZWEI Sticks
+* sonde3-gui.sh - Startskript für ein System mit grafischer Oberfläche und DREI Sticks
+* sondecom.txt - Enthält Parameter für den APRS-Kommentartext
+* sondeconfig.txt - Enthält die wichigen Variablen für die Konfiguration
+* sondestop.sh - Beendet sofort alle dxlAPRS Prozesse
 
-Für den Standalonebetrieb ohne grafische Oberfläche werden lediglich folgende 
-Dateien benötigt: 
-* sondestandalone.sh
-* sondenstop.sh
-* sdrcfg0.txt
-* sondecom.txt
-* netbeacon.txt
-* getalmd (nur für RS92 Sonden notwendig)
+Das Skript *getalmd* lädt den GPS-Almanach, welcher für RS92 Sonden notwendig 
+ist. Das Skript funktioniert derzeit jedoch nicht mehr, da sich die Server für
+den Bezug der Daten geändert haben. Aus diesem Grund ist es auch grundsätzlich
+deaktiviert. Falls jemand die richtigen Serverdaten hat, kann er diese im 
+Skript eintragen und die entsprechende Zeile im Startskript wieder aktivieren.
 
-Alle weiteren Dateien werden nur benötigt, wenn man die Tools in der grafischen
-Oberfläche betreiben will. Die *.desktop Dateien sind für die PIXEL Oberfläche
-von Raspbian gedacht. Wenn man diese in den Desktop-Ordner kopiert, sieht man
-die entsprechenden Symbole auf dem Desktop und kann diese direkt anklicken:
+Im Unterordner "Desktop" befinden sich Desktopverknüpfungen für die grafische Oberfläche
+* desktop-sonde1.desktop - Verknüpfung zum Startskript für EINEN Stick
+* desktop-sonde2.desktop - Verknüpfung zum Startskript für ZWEI Sticks
+* desktop-sonde3.desktop - Verknüpfung zum Startskript für DREI Sticks
+* desktop-sondenstop.desktop - Verknüpfung zum Sondenstop-Skript
+* aprsmap.desktop - Verknüpfung zu APRSMAP
 
-    cp *.desktop /home/pi/Desktop
+Man kopiert diese entweder über den Dateimanager in den Ordner ~/Desktop oder
+oder kopiert sie an der Konsole wie folgt
+
+    cp *.desktop ~/Desktop
 
 5. Geoid Datendatei herunterladen
 
-Zuletzt sollte noch die Datendatei für die Geoid-Berechnung geladen werden und 
-im APRS Ordner abgelegt werden (dafür den Befehl idealerweise direkt aus 
+Zuletzt sollte noch die Datendatei für die Geoid-Berechnung in den aprs Ordner 
+geladen werden (dafür den Befehl idealerweise direkt aus dem Ordner
 ~/dxlAPRS/aprs/ heraus aufrufen)
 
     wget https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/binary/WW15MGH.DAC
@@ -233,10 +280,7 @@ Wenn man SRTM Datenfiles hat, kann das iGate udpgate4 diese nutzen um die Höhen
 der Sonden über Grund im Webinterface anzuzeigen. Dazu muss im Ordner 
 ~/dxlAPRS/aprs/ der Ordner /srtm1 angelegt und die SRTM Datenfiles darin 
 abgelegt werden. Bei udpdate4 muss im Aufruf der Parameter -A <Pfad zu /srtm1>
-hinzugefügt werden. Die Startskripte enthalten am Ende eine Extrazeile
-in der dieser Parameter bereits integriert ist. Dafür muss dann die "normale"
-udpgate4 Zeile auskommentiert und die andere einkommentiert werden.
-Der /srtm1 Ordner sollte sich idealerweise im ~/dxlAPRS/aprs/ Ordner befinden.
+hinzugefügt werden. In den Startskripten ist dies bereits berücksichtigt.
 
 Alle Programmdateien, Skripte und Textdateien sollten sich der Einfachheit
 halber im selben Verzeichnis befinden. Auf dem RaspberryPi wäre das 
@@ -250,54 +294,46 @@ Wenn alle Pakete und Programmdateien installiert sind und sich die Skript-
 sowie Textdateien im Programmverzeichnis befinden, müssen noch mindestens die
 folgenden Schritte bzw. Anpassungen vorgenommen werden:
 
-1. Rufzeichen im Skript eintragen
+1. Parameter in der sondeconfig.txt eintragen:
 
-Bei SONDEUDP, SONDEMOD und UDPGATE4 muss MYCALL durch euer Rufzeichen ersetzt
-werden.
+* DXLPATH = Pfad zum aprs verzeichnis, z.B. /home/pi/dxlAPRS/aprs
+* IGATECALL = Rufzeichen des iGates inkl. SSID, z.B. NOCALL-10
+* SONDECALL = Rufzeichen des Absenders der Sondenobjekte inkl. SSID, z.B. NOCALL-11
+* PASSCODE = APRS Passcode für das iGate-Rufzeichen, z.B. 12345
+* LOCATOR = Eigener QTH-Locator (10 stellig!), z.B. JO01AA23BB (nur für Entfernungsberechnung relevant)
+* HOEHE = Höhe des Empfängers in Meter über NN (nur für Elevationsberechnung relevant)
+* ALT1 = Höhenschwelle in Meter für kleinstes Sendeintervall, z.B. 3000
+* ALT2 = Höhenschwelle in Meter für zweites Sendeintervall, z.B. 2000
+* ALT3 = Höhenschwelle in Meter für drittes Sendeintervall, z.B. 1000
+* INTERVALLHIGH = Sendeintervall in Sekunden für Sonden oberhalb von HEIGHT1, z.B. 30
+* INTERVALL1 = Sendeintervall in Sekunden für Sonden in der Höhe zwischen HEIGHT1 und HEIGHT2, z.B. 20
+* INTERVALL2 = Sendeintervall in Sekunden für Sonden in der Höhe zwischen HEIGHT2 und HEIGHT3, z.B. 10
+* INTERVALL3 = Häufiges Sendeintervall in Sekunden für Sonden unterhalb der Höhe von HEIGHT3, z.B. 5
 
-2. Eigenen Locator oder GPS-Standort sowie Höhe über NN eintragen
+Beim Vorhandensein von SRTM Daten in ~/dxlAPRS/aprs/srtm1 werden bei den 
+Parametern ALT* jeweils die Höhen über Grund zugrundegelegt.
 
-SONDEMOD benötigt für die Berechnung von Distanz, Azimuth und Elevation zur
-Wettersonde den eigenen Locator bzw. GPS-Position sowie die eigene Höhe über NN.
-Die Position gibt man mit dem Parameter -P im 10-stelligen Maidenhead-Locator
-Format oder in Dezimalgrad an, z.B. -P JO01AB50CD oder -P 70.0506 10.0092. Den
-10-stelligen Locator kann man auch hier bestimmen: http://k7fry.com/grid/. Die
-Höhe über NN trägt man im Parameter „-N“ ein, z.B. „-N 250“ bei 250m über NN.
+*Hinweis:* iGate Rufzeichen und Absenderrufzeichen müssen identisch sein, jedoch
+muss sich die SSID der beiden Calls unterscheiden. Also z.B. NOCALL-10 und
+NOCALL-11. Wird dies nicht beachtet, werden die Pakete von der Seite 
+wettersonde.net verworfen.
 
-3. Ziel APRS-Gateway eintragen
-
-Es muss ein Ziel-APRS Gateway eingetragen werden, an welches die erzeugten APRS
-Pakete gesendet werden sollen. Für Wettersonden eignet sich der Server bei
-radiosondy.info von Michal SQ6KXY. Dieser bereitet die Daten zusätzlich auf
-einer eigenen Communityseite auf und leitet sie auch auf Wunsch an das APRS-
-Netzwerk weiter. Entscheidend ist hier der Port an den gesendet wird. Der
-Zielport 14580 liefert die Daten an radiosondy.info und leitet sie auch an das
-APRS-Netzwerk weiter. Möchte man die Daten NUR an radisondy.info senden ohne
-diese ans APRS-Netzwerk zu senden, sendet man die Daten an Port 14590.
-Selbstverständlich kann man diese Daten auch direkt ins APRS-Netzwerk oder jeden
-beliebigen APRS-Server senden ohne den Umweg über radiosondy.info.
-
-4. APRS-Passcode
-
-Den APRS-Passcode für das eigene Gateway-Rufzeichen trägt man bei UDPGATE4 im
-Parameter -p ein. Dies ist notwendig, da sonst die APRS-Server keine Daten
-entgegen nehmen. Generieren kann man diesen z.B. hier:
-    https://apps.magicbug.co.uk/passcode/
-
-5. netbeacon.txt
+2. netbeacon.txt
 
 Die netbeacon.txt enthält die Koordinaten und den Kommentartext für die APRS-
-Netzbake des eigenen iGates. Bitte die Informationen in der netbeacon.txt lesen
-und beachten.
+Netzbake des eigenen iGates. Diese müssen zwingen händisch eingetragen werden.
+Bitte die Informationen in der netbeacon.txt lesen und beachten.
 
-6. sdrcfg0.txt
+3. sdrcfg0.txt / sdrcfg1.txt / sdrcfg2.txt
 
-Diese Datei enthält Parameter und Sondenfrequenzen, die überwacht werden 
-sollen. Für jeden SDR-Stick muss eine eigene sdrcfg Datei erzeugt werden. 
-Idealerweise werden diese durchnummeriert: sdrcfg0.txt, sdrcfg1.txt, 
-sdrcfg2.txt usw.
+Diese Dateien enthalten SDR Parameter und die Sondenfrequenzen, die überwacht
+werden sollen. Für jeden SDR-Stick muss eine eigene sdrcfg Datei verwendet 
+werden, weshalb diese durchnummeriert sind. Wird nur ein Stick verwendet, muss
+die Datei sdrcfg0.txt bearbeitet werden. Bei zwei Sticks die 0 und die 1 und 
+bei drei Stick alle drei. Möchte man hier manuell eingreifen, sind Änderungen
+im Startskript beim Punkt *sdrtst* durchzuführen.
 
-7. Optional: sondecom.txt
+4. Optional: sondecom.txt
 
 Optional deswegen, da die Vorgabe in der Regel reichen sollte. Anpassungen sind
 jedoch auf Wunsch und nach persönlichem Bedarf möglich. Diese Datei enthält die
@@ -305,32 +341,6 @@ Variablen für die Informationen, die den APRS-Paketen als Kommentartext
 angehängt werden. Man kann mehrere Zeilen definieren, dann werden die Kommentare
 abwechselnd variiert. Zeilen beginnend mit # werden ignoriert. Der mitgelieferte
 Inhalt ist ein Vorschlag der nützliche Informationen mit anzeigt und sendet.
-
-    %d%D%A%E%f
-    %s%u%v%f
-
-Die Beispielvariablen erzeugen zwei sich abwechselnde APRS-Kommentare bestehend
-aus:
-
-* RSSI-Wert (Empfangspegel), Entfernung zur Sonde, Azimuth und Elevation zur
-  Sonde in Grad, Frequenzabweichung innerhalb der AFC
-* Anzahl der empfangenen GPS-Satelliten, bisherige Laufzeit der Sonde, sondemod
-  Programmversion, Frequenzabweichung innerhalb der AFC
-
-So sehen die erzeugten APRS-Pakete beispielsweise aus:
-
-    DL1NUX-11>APLWS2:;P3340619 *174008h4927.18N/01232.40EO112/027/A=056331!wbA!
-    Clb=6.0m/s Type=RS41 rssi=68.5dB dist=270.218 azimuth=107 elevation=2.34 
-    rx=402700(+0/5)
-
-    DL1NUX-11>APLWS2:;P3340619 *174028h4927.14N/01232.56EO107/021/A=056650!wbb!
-    Clb=4.6m/s Type=RS41-SGP Sats=11 powerup h:m:s 01:08:51 sondemod 1.36 
-    rx=402700(+0/5)
-
-8. Programm und Dateipfade anpassen
-
-Falls sich eure Programme und Dateien nicht in /home/pi/dxlAPRS/aprs befinden,
-müsst ihr alle genannten Dateipfade im Skript nachträglich anpassen.
 
 # Programmstart
 
@@ -353,9 +363,9 @@ starten. Dazu muss die Datei /etc/crontab als root (sudo) editiert werden:
 
     sudo nano /etc/crontab
 
-Nun fügt man folgenden Eintrag der Tabelle hinzu:
+Nun fügt man beispielsweise folgenden Eintrag der Tabelle hinzu:
 
-    @reboot pi /home/pi/dxlAPRS/aprs/sondestandalone.sh
+    @reboot pi /home/pi/dxlAPRS/aprs/sonde2.sh
 
 "pi" nach dem "@reboot" ist der Benutzer, unter dem das Skript ausgeführt werden
 soll. Es sollte NICHT! als root laufen. Wenn der Dateiname des Skripts 
@@ -364,7 +374,9 @@ abweicht, bitte entsprechend eintragen.
 Es gibt darüberhinaus auch andere Möglichkeiten das Skript automatisch starten
 zu lassen. Das ist euch dann selbst überlassen. Falls euer Rechner zu lange
 zum booten braucht und das Skript zu schnell startet, verpasst ihm einfach
-einen "sleep 20" oder so am Anfang der Datei, dadurch startet es später.
+eine Wartezeit am Anfang der Datei. In den Skripten ist dies unter dem Punkt
+"Wartezeit" bereits eingebaut, jedoch standardmäßig auskommentiert. Zum 
+aktivieren entfernt man einfach die # vor der Zeile.
 
 2. Automatisches Starten auf einem RaspberryPi mit PIXEL GUI
 
@@ -376,7 +388,7 @@ Dazu erstellt man erst den autostart Ordner (sofern er noch nicht existiert)
 und kopiert anschließend die sondenstart.desktop Datei hinein.
 
     mkdir ~/.config/autostart
-    cp sondenstart.desktop /home/pi/.config/autostart
+    cp desktop-sonde2.desktop /home/pi/.config/autostart
 
 Im grafischen Dateimanager muss ggf. erst die Option "Versteckte anzeigen"
 im Menü "Ansicht" aktiviert werden, damit man den Ordner ~/.config sieht.

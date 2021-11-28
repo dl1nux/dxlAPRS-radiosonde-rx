@@ -1,5 +1,4 @@
-%d%D%A%E%f
-%s%u%v%f
+%d%D%A%E%f%u%F
 #
 # Erklärung der Variablen (Auszug aus sondemod -h)
 #
