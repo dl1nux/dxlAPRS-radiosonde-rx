@@ -1,7 +1,7 @@
 # dxlAPRS-radiosonde-rx
 Wettersonden-Empfänger mit dxlAPRS
 
-Stand 28.11.2021
+Stand 05.12.2021
 
 # Inhaltsverzeichnis
 * Einleitung
@@ -234,7 +234,7 @@ Programmordner kopieren oder verschieben.
 
 Das Archiv enthält folgende Dateien:
 * getalmd - Bash Skript von OE5DXL zum Laden des GPS Almanach für RS92 Sonden
-* netbeacon.txt - Defniert die APRS-Bake für den Empfänger ins APRS-IS Netzwerk
+* netbeacon_sonde.txt - Defniert die APRS-Bake für den Empfänger ins APRS-IS Netzwerk
 * README.md - Diese Infodatei
 * sdrcfg0.txt - Musterdatei für die Sonden-Empfangsfrequenzen für den 1. Stick
 * sdrcfg1.txt - Musterdatei für die Sonden-Empfangsfrequenzen für den 2. Stick
@@ -319,11 +319,11 @@ muss sich die SSID der beiden Calls unterscheiden. Also z.B. NOCALL-10 und
 NOCALL-11. Wird dies nicht beachtet, werden die Pakete von der Seite 
 wettersonde.net verworfen.
 
-2. netbeacon.txt
+2. netbeacon_sonde.txt
 
-Die netbeacon.txt enthält die Koordinaten und den Kommentartext für die APRS-
+Die netbeacon_sonde.txt enthält die Koordinaten und den Kommentartext für die APRS-
 Netzbake des eigenen iGates. Diese müssen zwingen händisch eingetragen werden.
-Bitte die Informationen in der netbeacon.txt lesen und beachten.
+Bitte die Informationen in der netbeacon_sonde.txt lesen und beachten.
 
 3. sdrcfg0.txt / sdrcfg1.txt / sdrcfg2.txt
 
@@ -394,6 +394,10 @@ und kopiert anschließend die sondenstart.desktop Datei hinein.
 Im grafischen Dateimanager muss ggf. erst die Option "Versteckte anzeigen"
 im Menü "Ansicht" aktiviert werden, damit man den Ordner ~/.config sieht.
 
+===========================================================================
+Update 05.12.2021: Dateiname geändert netbeacon.txt > netbeacon_sonde.txt
+Damit kann man APRS- und Sondenskripte unabhängig voneinander in einem Ordner
+ablegen und nutzen (Keine Namensgleichheit mehr).
 ===========================================================================
 
 Diese Anleitung wurde mit bestem Wissen und Gewissen und mit Hilfe des
