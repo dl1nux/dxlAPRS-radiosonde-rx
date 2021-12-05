@@ -225,9 +225,10 @@ Dort fügen wir folgende Zeile ein und speichern diese mit STRG+O:
 
 4. Beispielskript und -dateien herunterladen und ggf. in den APRS Ordner kopieren
 
-Download der Dateien von github in den Ordner ~/dxlAPRS/aprs:
+4.1. Download der Dateien von github in den Ordner ~/dxlAPRS/aprs:
 
-	  git clone https://github.com/dl1nux/dxlAPRS-radiosonde-rx.git ~/dxlAPRS/aprs
+	  cd ~/dxlAPRS/aprs/
+      git clone https://github.com/dl1nux/dxlAPRS-radiosonde-rx.git
 	
 Sollten die Dateien im falschen Ordner landen, einfach alles in den aprs
 Programmordner kopieren oder verschieben.
@@ -235,6 +236,7 @@ Programmordner kopieren oder verschieben.
 Das Archiv enthält folgende Dateien:
 * getalmd - Bash Skript von OE5DXL zum Laden des GPS Almanach für RS92 Sonden
 * netbeacon_sonde.txt - Defniert die APRS-Bake für den Empfänger ins APRS-IS Netzwerk
+* objectlink.txt - externer Link zu radiosondy.info für die Sondeneinträge im Webinterface
 * README.md - Diese Infodatei
 * sdrcfg0.txt - Musterdatei für die Sonden-Empfangsfrequenzen für den 1. Stick
 * sdrcfg1.txt - Musterdatei für die Sonden-Empfangsfrequenzen für den 2. Stick
@@ -255,6 +257,8 @@ den Bezug der Daten geändert haben. Aus diesem Grund ist es auch grundsätzlich
 deaktiviert. Falls jemand die richtigen Serverdaten hat, kann er diese im 
 Skript eintragen und die entsprechende Zeile im Startskript wieder aktivieren.
 
+4.2. Dateien verschieben oder kopieren
+
 Im Unterordner "Desktop" befinden sich Desktopverknüpfungen für die grafische Oberfläche
 * desktop-sonde1.desktop - Verknüpfung zum Startskript für EINEN Stick
 * desktop-sonde2.desktop - Verknüpfung zum Startskript für ZWEI Sticks
@@ -267,13 +271,17 @@ oder kopiert sie an der Konsole wie folgt:
 
     cp *.desktop ~/Desktop
 
+Die Datei **objectlink.txt** muss in den Ordner *~/dxlAPRS/aprs/www/* kopiert werden.
+Sie enthält den externen Link zu radiosondy.info der aufgerufen wird, sobald man im 
+Webinterface die Seriennummer einer empfangenen Sonde anklickt.
+
 5. Geoid Datendatei herunterladen
 
 Zuletzt sollte noch die Datendatei für die Geoid-Berechnung in den aprs Ordner 
 geladen werden (dafür den Befehl idealerweise direkt aus dem Ordner
 ~/dxlAPRS/aprs/ heraus aufrufen)
 
-    wget https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/binary/WW15MGH.DAC
+    wget http://download.osgeo.org/proj/vdatum/egm96_15/outdated/WW15MGH.DAC
 
 6. Optional: SRTM Höhendaten im System hinterlegen
 
@@ -395,9 +403,12 @@ Im grafischen Dateimanager muss ggf. erst die Option "Versteckte anzeigen"
 im Menü "Ansicht" aktiviert werden, damit man den Ordner ~/.config sieht.
 
 ===========================================================================
-Update 05.12.2021: Dateiname geändert netbeacon.txt > netbeacon_sonde.txt
+Update 05.12.2021: 
+* Dateiname geändert netbeacon.txt > netbeacon_sonde.txt
 Damit kann man APRS- und Sondenskripte unabhängig voneinander in einem Ordner
 ablegen und nutzen (Keine Namensgleichheit mehr).
+* objectlink.txt eingefügt (externer Link zu radiosondy.info)
+* Downloadpfad zur WW15MGH.DAC aktualisiert.
 ===========================================================================
 
 Diese Anleitung wurde mit bestem Wissen und Gewissen und mit Hilfe des
