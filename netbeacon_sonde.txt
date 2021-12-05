@@ -1,4 +1,4 @@
-!5010.00N/01100.00E`Radiosonden iGate von MYCALL
+!5014.00N/01100.00E`Radiosonden iGate von MYCALL
 #
 # Geokoordinaten in Grad und Dezimalminuten ohne °-Symbol
 # Beispiel 50°10.00 N = 5010.00N und 011°00.00 E = 01100.00E

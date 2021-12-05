@@ -403,12 +403,14 @@ Im grafischen Dateimanager muss ggf. erst die Option "Versteckte anzeigen"
 im Menü "Ansicht" aktiviert werden, damit man den Ordner ~/.config sieht.
 
 ===========================================================================
+
 Update 05.12.2021: 
 * Dateiname geändert netbeacon.txt > netbeacon_sonde.txt
 Damit kann man APRS- und Sondenskripte unabhängig voneinander in einem Ordner
 ablegen und nutzen (Keine Namensgleichheit mehr).
 * objectlink.txt eingefügt (externer Link zu radiosondy.info)
 * Downloadpfad zur WW15MGH.DAC aktualisiert.
+
 ===========================================================================
 
 Diese Anleitung wurde mit bestem Wissen und Gewissen und mit Hilfe des
