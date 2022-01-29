@@ -78,5 +78,5 @@ sleep 1
 # iGate für radiosondy.info
 udpgate4 -s $IGATECALL -R 127.0.0.1:0:9101 -B 2880 -u 50 -H 0 -I 0 -L 0 -A $DXLPATH/ -n 30:$DXLPATH/netbeacon_sonde.txt -g radiosondy.info:14580#m/1 -p $PASSCODE -w 14501 -v -D $DXLPATH/www/ &
 sleep 1
-# iGate für wettersonde.net
-udpgate4 -s $IGATECALL -R 127.0.0.1:0:9102 -B 2880 -u 50 -H 0 -I 0 -L 0 -A $DXLPATH/ -n 30:$DXLPATH/netbeacon_sonde.txt -g wettersonde.net:14580#m/1 -p $PASSCODE -w 14502 -v -D $DXLPATH/www/ &
+# iGate für weiteren Server - Bitte Serververbindung eintragen!
+#udpgate4 -s $IGATECALL -R 127.0.0.1:0:9102 -B 2880 -u 50 -H 0 -I 0 -L 0 -A $DXLPATH/ -n 30:$DXLPATH/netbeacon_sonde.txt -g server.adresse:14580#m/1 -p $PASSCODE -w 14502 -v -D $DXLPATH/www/ &

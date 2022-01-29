@@ -1,7 +1,7 @@
 # dxlAPRS-radiosonde-rx
 Wettersonden-Empfänger mit dxlAPRS
 
-Stand 05.12.2021
+Stand 29.01.2022
 
 # Inhaltsverzeichnis
 * Einleitung
@@ -20,9 +20,10 @@ Stand 05.12.2021
 # Einleitung
 
 Die folgende Anleitung dient dazu in wenigen Schritten einen Wettersonden-
-Empfänger aufzubauen, der seine Daten an die Community-Seiten radiosondy.info,
-wettersonde.net und auch in das APRS-Netzwerk weiterleitet. Selbstverständlich
-kann man den Empfänger auch nur lokal nutzen ohne eine Weiterleitung der Daten.
+Empfänger aufzubauen, der seine Daten an die Community-Seite radiosondy.info
+und auch in das APRS-Netzwerk weiterleitet. Ein weiterer Server kann 
+hinzugefügt werden. Selbstverständlich kann man den Empfänger auch nur lokal 
+nutzen ohne eine Weiterleitung der Daten.
 
 dxlAPRS ist eine „Toolchain“ bzw. Programmsammlung für Linux Systeme rund um
 die Betriebsart APRS und wird von Christian OE5DXL entwickelt. Neben
@@ -155,10 +156,9 @@ Filter und Vorverstärker im internet.
 # Funktionsweise der vorliegenden Skripte
 
 Die Skripte empfangen und dekodieren die Daten der Wettersonden. Daraus werden
-APRS-Pakete (APRS-Objekte) erzeugt. Diese APRS Pakete werden dann an zwei 
-Server gleichzeitig gesendet. Einmal an radiosondy.info von Michal SQ6KXY, und
-dann nochmal an wettersonde.net von Jean-Michael DO2JMG. Zusätzlich können die
-Daten noch mit APRSMAP auf einer Karte dargestellt werden.
+APRS-Pakete (APRS-Objekte) erzeugt. Diese APRS Pakete werden dann an den APRS- 
+Server von radiosondy.info gesendet. Zusätzlich können die Daten noch mit 
+APRSMAP auf einer Karte dargestellt werden.
 
 Die meisten Parameter müssen in der Datei sondeconfig.txt eingetragen werden.
 Diese Datei wird von jedem Skript zu Beginn eingelesen und die enthaltenen
@@ -174,11 +174,10 @@ grafischen Oberfläche (*-gui.sh). Diese sind jeweils für die Nutzung von ein,
 zwei oder drei Sticks parallel gedacht. Ein weiteres Skript ist zum stoppen
 aller Prozesse gedacht (sondestop.sh).
 
-Wenn der Empfänger läuft, kann man die zwei Webinterfaces der iGates einfach
-im Browser über die Ports 14501 und 14502 aufrufen, z.B.:
+Wenn der Empfänger läuft, kann man das Webinterfaces des iGates einfach
+im Browser über den Port 14501 aufrufen, z.B.:
 
     http://192.168.178.66:14501/mh  (Verbindung zu radiosondy.info)
-    http://192.168.178.66:14502/mh  (Verbindung zu wettersonde.net)
 
 Natürlich müsst ihr die passende IP-Adresse einsetzen, die euer RaspberryPi
 bzw. Rechner im Netzwerk hat.
@@ -324,8 +323,7 @@ Parametern ALT* jeweils die Höhen über Grund zugrundegelegt.
 
 **Hinweis:** iGate Rufzeichen und Absenderrufzeichen müssen identisch sein, jedoch
 muss sich die SSID der beiden Calls unterscheiden. Also z.B. NOCALL-10 und
-NOCALL-11. Wird dies nicht beachtet, werden die Pakete von der Seite 
-wettersonde.net verworfen.
+NOCALL-11. 
 
 2. netbeacon_sonde.txt
 
@@ -411,6 +409,11 @@ ablegen und nutzen (Keine Namensgleichheit mehr).
 * objectlink.txt eingefügt (externer Link zu radiosondy.info)
 * Downloadpfad zur WW15MGH.DAC aktualisiert.
 
+Update 29.01.2022:
+* wettersonde.net ist QRT. Alle Einträge dorthin entfernt bzw. auskommentiert.
+* Zeilen können bei Bedarf für einen weiteren APRS-Server genutzt werden.
+* Einkommentieren und Serveradresse bei udpgate4 -g eintragen.
+  
 ===========================================================================
 
 Diese Anleitung wurde mit bestem Wissen und Gewissen und mit Hilfe des
