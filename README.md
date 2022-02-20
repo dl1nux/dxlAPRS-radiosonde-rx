@@ -1,7 +1,7 @@
 # dxlAPRS-radiosonde-rx
 Wettersonden-Empfänger mit dxlAPRS
 
-Stand 29.01.2022
+Stand 20.02.2022
 
 # Inhaltsverzeichnis
 * Einleitung
@@ -20,10 +20,10 @@ Stand 29.01.2022
 # Einleitung
 
 Die folgende Anleitung dient dazu in wenigen Schritten einen Wettersonden-
-Empfänger aufzubauen, der seine Daten an die Community-Seite radiosondy.info
-und auch in das APRS-Netzwerk weiterleitet. Ein weiterer Server kann 
-hinzugefügt werden. Selbstverständlich kann man den Empfänger auch nur lokal 
-nutzen ohne eine Weiterleitung der Daten.
+Empfänger aufzubauen, der seine Daten an die Community-Seite radiosondy.info,
+zu wettersonde.net und auch in das APRS-Netzwerk weiterleitet. 
+Selbstverständlich kann man den Empfänger auch nur lokal nutzen ohne eine 
+Weiterleitung der Daten.
 
 dxlAPRS ist eine „Toolchain“ bzw. Programmsammlung für Linux Systeme rund um
 die Betriebsart APRS und wird von Christian OE5DXL entwickelt. Neben
@@ -49,8 +49,8 @@ folgenden Komponenten aus den dxlAPRS Tools benötigt:
 * sdrtst (Empfänger)
 * sondeudp (Sondendekodierung)
 * sondemod (Erzeugung von APRS Paketen aus den Sondendaten)
-* udpgate4 (APRS iGate)
 * udpbox (Verfielfältigung der AXUDP Streams)
+* udpgate4 (APRS iGate)
 
 rtl_tcp stellt einen SDR Server bereit. sdrtst zapft diesen SDR Server an und
 erzeugt Empfänger auf den vorgegebenen Frequenzen (sdrcfg0.txt). sdrtst sendet
@@ -174,10 +174,10 @@ grafischen Oberfläche (*-gui.sh). Diese sind jeweils für die Nutzung von ein,
 zwei oder drei Sticks parallel gedacht. Ein weiteres Skript ist zum stoppen
 aller Prozesse gedacht (sondestop.sh).
 
-Wenn der Empfänger läuft, kann man das Webinterfaces des iGates einfach
+Wenn der Empfänger läuft, kann man das Webinterface des iGates einfach
 im Browser über den Port 14501 aufrufen, z.B.:
 
-    http://192.168.178.66:14501/mh  (Verbindung zu radiosondy.info)
+    http://192.168.178.66:14501/mh
 
 Natürlich müsst ihr die passende IP-Adresse einsetzen, die euer RaspberryPi
 bzw. Rechner im Netzwerk hat.
@@ -229,8 +229,7 @@ Dort fügen wir folgende Zeile ein und speichern diese mit STRG+O:
 	  cd ~/dxlAPRS/aprs/
       git clone https://github.com/dl1nux/dxlAPRS-radiosonde-rx.git
 	
-Sollten die Dateien im falschen Ordner landen, einfach alles in den aprs
-Programmordner kopieren oder verschieben.
+Die Dateien landen nun im Unterordner /dxlAPRS-radiosonde-rx des APRS Ordners.
 
 Das Archiv enthält folgende Dateien:
 * getalmd - Bash Skript von OE5DXL zum Laden des GPS Almanach für RS92 Sonden
@@ -249,12 +248,6 @@ Das Archiv enthält folgende Dateien:
 * sondecom.txt - Enthält Parameter für den APRS-Kommentartext
 * sondeconfig.txt - Enthält die wichigen Variablen für die Konfiguration
 * sondestop.sh - Beendet sofort alle dxlAPRS Prozesse
-
-Das Skript **getalmd** lädt den GPS-Almanach, welcher für RS92 Sonden notwendig 
-ist. Das Skript funktioniert derzeit jedoch nicht mehr, da sich die Server für
-den Bezug der Daten geändert haben. Aus diesem Grund ist es auch grundsätzlich
-deaktiviert. Falls jemand die richtigen Serverdaten hat, kann er diese im 
-Skript eintragen und die entsprechende Zeile im Startskript wieder aktivieren.
 
 4.2. Dateien verschieben oder kopieren
 
@@ -288,7 +281,8 @@ Wenn man SRTM Datenfiles hat, kann das iGate udpgate4 diese nutzen um die Höhen
 der Sonden über Grund im Webinterface anzuzeigen. Dazu muss im Ordner 
 ~/dxlAPRS/aprs/ der Ordner /srtm1 angelegt und die SRTM Datenfiles darin 
 abgelegt werden. Bei udpdate4 muss im Aufruf der Parameter -A <Pfad zu /srtm1>
-hinzugefügt werden. In den Startskripten ist dies bereits berücksichtigt.
+hinzugefügt werden. In den fertigen Startskripten ist dies bereits 
+berücksichtigt.
 
 Alle Programmdateien, Skripte und Textdateien sollten sich der Einfachheit
 halber im selben Verzeichnis befinden. Auf dem RaspberryPi wäre das 
@@ -304,7 +298,6 @@ folgenden Schritte bzw. Anpassungen vorgenommen werden:
 
 1. Parameter in der sondeconfig.txt eintragen:
 
-* DXLPATH = Pfad zum aprs verzeichnis, z.B. /home/pi/dxlAPRS/aprs
 * IGATECALL = Rufzeichen des iGates inkl. SSID, z.B. NOCALL-10
 * SONDECALL = Rufzeichen des Absenders der Sondenobjekte inkl. SSID, z.B. NOCALL-11
 * PASSCODE = APRS Passcode für das iGate-Rufzeichen, z.B. 12345
@@ -323,13 +316,15 @@ Parametern ALT* jeweils die Höhen über Grund zugrundegelegt.
 
 **Hinweis:** iGate Rufzeichen und Absenderrufzeichen müssen identisch sein, jedoch
 muss sich die SSID der beiden Calls unterscheiden. Also z.B. NOCALL-10 und
-NOCALL-11. 
+NOCALL-11. Dies ist Voraussetzung für die Einspeisung bei wettersonde.net
 
 2. netbeacon_sonde.txt
 
 Die netbeacon_sonde.txt enthält die Koordinaten und den Kommentartext für die APRS-
-Netzbake des eigenen iGates. Diese müssen zwingen händisch eingetragen werden.
+Netzbake des eigenen iGates. Diese müssen zwingend händisch eingetragen werden.
 Bitte die Informationen in der netbeacon_sonde.txt lesen und beachten.
+Die Aussendung einer Netz-Bake ist Voraussetzung für die Datenannahme bei 
+wettersonde.net
 
 3. sdrcfg0.txt / sdrcfg1.txt / sdrcfg2.txt
 
@@ -337,7 +332,7 @@ Diese Dateien enthalten SDR Parameter und die Sondenfrequenzen, die überwacht
 werden sollen. Für jeden SDR-Stick muss eine eigene sdrcfg Datei verwendet 
 werden, weshalb diese durchnummeriert sind. Wird nur ein Stick verwendet, muss
 die Datei sdrcfg0.txt bearbeitet werden. Bei zwei Sticks die 0 und die 1 und 
-bei drei Stick alle drei. Möchte man hier manuell eingreifen, sind Änderungen
+bei drei Sticks alle drei. Möchte man hier manuell eingreifen, sind Änderungen
 im Startskript beim Punkt **sdrtst** durchzuführen.
 
 4. Optional: sondecom.txt
@@ -348,6 +343,8 @@ Variablen für die Informationen, die den APRS-Paketen als Kommentartext
 angehängt werden. Man kann mehrere Zeilen definieren, dann werden die Kommentare
 abwechselnd variiert. Zeilen beginnend mit # werden ignoriert. Der mitgelieferte
 Inhalt ist ein Vorschlag der nützliche Informationen mit anzeigt und sendet.
+Beim Einspeisen zu wettersonde.net werden manche Kommentare nicht akzeptiert.
+Die hier gegebene Vorgabe wird aber anerkannt.
 
 # Programmstart
 
@@ -381,9 +378,9 @@ abweicht, bitte entsprechend eintragen.
 Es gibt darüberhinaus auch andere Möglichkeiten das Skript automatisch starten
 zu lassen. Das ist euch dann selbst überlassen. Falls euer Rechner zu lange
 zum booten braucht und das Skript zu schnell startet, verpasst ihm einfach
-eine Wartezeit am Anfang der Datei. In den Skripten ist dies unter dem Punkt
-"Wartezeit" bereits eingebaut, jedoch standardmäßig auskommentiert. Zum 
-aktivieren entfernt man einfach die # vor der Zeile.
+eine Wartezeit am Anfang der Datei. In den Skripten ist dies am Anfrag der 
+Datei bereits vorgesehen, jedoch standardmäßig auskommentiert. Zum 
+aktivieren entfernt man einfach die # vor der Zeile "sleep 10".
 
 2. Automatisches Starten auf einem RaspberryPi mit PIXEL GUI
 
@@ -402,6 +399,11 @@ im Menü "Ansicht" aktiviert werden, damit man den Ordner ~/.config sieht.
 
 ===========================================================================
 
+Update 20.02.2022
+* wettersonde.net wieder eingebaut da wieder online.
+* Programmpfad wird nun automatisch ermittelt und in den Systempfad eingetragen
+* DXLPATH aus sondeconfig.txt entfernt, wird nun automatisch ermittelt
+
 Update 05.12.2021: 
 * Dateiname geändert netbeacon.txt > netbeacon_sonde.txt
 Damit kann man APRS- und Sondenskripte unabhängig voneinander in einem Ordner
@@ -415,6 +417,24 @@ Update 29.01.2022:
 * Einkommentieren und Serveradresse bei udpgate4 -g eintragen.
   
 ===========================================================================
+FAQ
+
+F: 
+Wie geht ich vor wenn ich den verdacht habe dass ich nichts mehr empfange?
+Was könnten die Ursachen sein?
+A: 
+* Webinterface checken - sind länger keine Einträge mehr vorhanden?
+* Mit lsusb nachsehen ob noch alle SDR-Sticks im System eingebunden sind.
+* Wenn ja, Prozesse checken mit z.B. htop. Jeder SDRTST Prozess muss eine
+  nennenswerte CPU-Auslastung vorweisen. Wenn nicht, ist vermutlich der rtl_tcp
+  Prozess abgebrochen.
+* Ursache könnte eine schlechte USB-Verbindung sein (versehentlich angestoßen).
+  Auch Stromversorgungsprobleme gibt es oft, bei mehr als zwei angeschlossenen
+  SDR-Sticks. Abhilfe: Externen USB Hub mit eigener Stromversorgung nutzen).
+* Ansonsten das Skript einfach neu starten, damit werden alle Prozesse beendet
+  und neu gestartet. Man kann auch manuell einfach nur die rtl_tcp und sdrtst 
+  Prozesse neu starten, der Rest kann eigentlich weiterlaufen.
+===========================================================================
 
 Diese Anleitung wurde mit bestem Wissen und Gewissen und mit Hilfe des
 Entwicklers Christian OE5DXL erstellt. Aber auch hier kann sich natürlich der
@@ -422,6 +442,13 @@ Fehlerteufel verstecken. Deshalb sind alle Angaben ohne Gewähr! Auch geht die
 Entwicklung der dxlAPRS Tools immer weiter, was auch Veränderungen mit sich
 bringen kann. Wenn ihr einen Fehler findet oder Fragen habt, zögert nicht mich
 zu kontaktieren. Gerne auch als Kommentar auf der Webseite.
+
+Danksagungen:
+
+* Chris OE5DXL für seine unersatzbare Arbeit an den dxlAPRS Tools
+* Michael DL5OCD für die geniale Idee mit der config.txt
+* Peter DK4KP für die Perfektonierung der Programmpfadbestimmung
+* Al Maecht G0D für viele Inspirationen
 
 Kontaktmöglichkeiten:
 
@@ -432,3 +459,8 @@ Kontaktmöglichkeiten:
 Die ausführliche Anleitung mit einer Erklärung aller Parameter befindet sich im
 Internet auf meiner Webseite:
 http://www.dl1nux.de/wettersonden-rx-mit-dxlaprs/
+
+Support und Infos: 
+* dxl-Wiki: http://dxlwiki.dl1nux.de
+* Telegramm Community: https://t.me/joinchat/CRNMIBpKRcfQEBTPKLS0zg
+* YouTube Video-Tutorials von DL1NUX: https://www.youtube.com/channel/UCRm7ulWMMXAK0PpviOO0xOg

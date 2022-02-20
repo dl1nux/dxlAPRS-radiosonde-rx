@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/bash
+#sleep 10
 # Wettersonden-Empfänger mit Weiterleitung zu radiosondy.info und wettersonde.net
 #----------------------------------------------------------------------------------------------------
 # Ausführliche Informationen unter: https://www.dl1nux.de/wettersonden-rx-mit-dxlaprs/
@@ -9,28 +10,23 @@
 # Bitte die Datei sondeconfig.txt und netbeacon_sonde.txt anpassen (siehe README.md)
 # Die zu überwachenden Sondenfrequenzen müssen noch in den sdrcfg*.txt Dateien einkommentiert werden.
 #----------------------------------------------------------------------------------------------------
-# Wartezeit in Sekunden bevor die Programme geladen werden (bitte bei Bedarf wieder einkommentieren)
-#sleep 10
 
-# Variablen werden aus sondeconfig.txt eingelesen
+# Programmpfad bestimmen und in den Systempfad einfügen
+export DXLPATH=$(dirname `realpath $0`)
+export PATH=$DXLPATH:$PATH
+
+# Variablen aus Datei sondeconfig.txt einlesen
 while read line; do    
     export $line    
-done < sondeconfig.txt
+done < $DXLPATH/sondeconfig.txt
 
 # Wir beenden sicherheitshalber alle Prozesse die bereits laufen könnten
-#sleep 10
 killall -9 getalmd rtl_tcp sdrtst sondeudp sondemod udpbox udpgate4 
 sleep 1
 
-# Hier befindet sich das Programmverzeichnis. Bitte ggf. anpassen
-PATH=$DXLPATH:$PATH
-
 # getalmd lädt den aktuellen GPS Almanach (wird für RS92 Sonden benötigt).
-# Die Server haben sich geändert, das Skript funktioniert derzeit nicht mehr.
-# Bei Bedarf bitte die korrekten Server im Skript eintragen und die folgenden
-# Zeilen wieder einkommentieren.
-#xfce4-terminal --title GETALMD -e getalmd &
-#sleep 1
+getalmd &
+sleep 1
 
 # Audiopipes erstellen (falls nicht vorhanden)
 # Stick 0
@@ -42,7 +38,6 @@ mknod $DXLPATH/sondepipe2 p 2> /dev/null
 
 # SRTM1 Ordner erstellen, falls nicht vorhanden
 mkdir $DXLPATH/srtm1 2> /dev/null
-
 sleep 1
 
 # Starten der SDR Server (RTL_TCP)
@@ -100,5 +95,5 @@ sleep 1
 # iGate für radiosondy.info
 udpgate4 -s $IGATECALL -R 127.0.0.1:0:9101 -B 2880 -u 50 -H 0 -I 0 -L 0 -A $DXLPATH/ -n 30:$DXLPATH/netbeacon_sonde.txt -g radiosondy.info:14580#m/1 -p $PASSCODE -w 14501 -v -D $DXLPATH/www/ &
 sleep 1
-# iGate für weiteren Server - Bitte Serververbindung eintragen!
-#udpgate4 -s $IGATECALL -R 127.0.0.1:0:9102 -B 2880 -u 50 -H 0 -I 0 -L 0 -A $DXLPATH/ -n 30:$DXLPATH/netbeacon_sonde.txt -g server.adresse:14580#m/1 -p $PASSCODE -w 14502 -v -D $DXLPATH/www/ &
+# iGate für wettersonde.net
+udpgate4 -s $IGATECALL -R 127.0.0.1:0:9102 -B 2880 -u 50 -H 0 -I 0 -L 0 -A $DXLPATH/ -n 30:$DXLPATH/netbeacon_sonde.txt -g wettersonde.net:14580#m/1 -p $PASSCODE -w 14502 -v -D $DXLPATH/www/ &

@@ -15,25 +15,33 @@ while true; do
     echo day:$DAY year:$YEAR
     FN=brdc`echo -n $DAY`0.`echo -n $YEAR`n
     FNU=BRDC`echo -n $DAY`0.`echo -n $YEAR`n
+    URL=ftp://igs.bkg.bund.de/IGS/BRDC/$(date +%Y)/$(date +%j)/brdc$(date +%j)0.$(date +%y)n.gz
     PD=$PWD
     cd $TEMP
-    rm -f $TEMP/$FN
+    rm -f $TEMP/$FN $TEMP/$FN.gz $TEMP/$FN$EXT
 #    wget http://qz-vision.jaxa.jp/USE/archives/ephemeris//20$YEAR/$FN
 #    if [ -s $TEMP/$FN ] ; then
 #      echo jaxa ok
 #    else
-#      wget ftp://www.ngs.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
 
-#    wget ftp://alt.ngs.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
+#echo ftp://www.ngs.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
+#     wget ftp://www.ngs.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
+      wget $URL
+#     wget ftp://alt.ngs.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
 #    if [ -s $TEMP/$FN.gz ] ; then
 #      echo noaa alt ok
 #      gunzip $TEMP/$FN.gz
-    wget ftp://cddis.gsfc.nasa.gov/gnss/data/daily/20$YEAR/brdc/$FN$EXT
-    if [ -s $TEMP/$FN$EXT ] ; then
+#    wget ftp://cddis.gsfc.nasa.gov/gnss/data/daily/20$YEAR/brdc/$FN$EXT
+    if [ -s $TEMP/$FN.gz ] ; then
+      echo bund ok
+      gunzip $TEMP/$FN.gz
+
+    elif [ -s $TEMP/$FN$EXT ] ; then
       echo noaa alt ok
       gunzip $TEMP/$FN$EXT
 
     else
+
 
       wget ftp://geodesy.noaa.gov/cors/rinex/20$YEAR/$DAY/$FN.gz
       if [ -s $TEMP/$FN.gz ] ; then
@@ -74,6 +82,6 @@ while true; do
       sleep 300
     fi
   else
-    sleep 10
+    sleep 30
   fi 
 done
