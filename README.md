@@ -434,6 +434,7 @@ A:
 * Ansonsten das Skript einfach neu starten, damit werden alle Prozesse beendet
   und neu gestartet. Man kann auch manuell einfach nur die rtl_tcp und sdrtst 
   Prozesse neu starten, der Rest kann eigentlich weiterlaufen.
+
 ===========================================================================
 
 Diese Anleitung wurde mit bestem Wissen und Gewissen und mit Hilfe des
