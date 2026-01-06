@@ -1,1 +1,2 @@
+"https://www.wettersonde.net/map.php?sonde=$c" target="_blank"
 "https://radiosondy.info/sonde.php?sondenumber=$c" target="_blank"

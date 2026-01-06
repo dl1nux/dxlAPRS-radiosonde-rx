@@ -25,8 +25,8 @@ killall -9 getalmd rtl_tcp sdrtst sondeudp sondemod udpbox udpgate4
 sleep 1
 
 # getalmd lädt den aktuellen GPS Almanach (wird für RS92 Sonden benötigt).
-xfce4-terminal --title GETALMD -e getalmd &
-sleep 1
+#xfce4-terminal --title GETALMD -e getalmd &
+#sleep 1
 
 # Audiopipes erstellen (falls nicht vorhanden)
 # Stick 0
@@ -76,10 +76,7 @@ sleep 1
 # APRS iGate (UDPGATE4) - sendet die Daten im APRS Format an einen APRS Server (-g)
 #
 # radiosondy.info:14580       => Daten zu Radiosondy.info inklusive Weiterleitung an das APRS-IS-Netzwerk (Port 14580)
-# radiosondy.info:14590       => Daten zu Radiosondy.info OHNE Weiterleitung an das APRS-IS-Netzwerk (Port 14590)
 # wettersonde.net:14580       => Daten zu wettersonde.net
-# rotate.aprs2.net:14580      => Daten direkt ins APRS-IS-Netzwerk via INTERNET
-# aprs.hc.r1.ampr.org:14580   => Daten direkt ins APRS-IS-Netzwerk via HAMNET
 
 # iGate für radiosondy.info
 xfce4-terminal --minimize --title UDPGATE4_Radiosondy -e 'bash -c "udpgate4 -s $IGATECALL -R 127.0.0.1:0:9101 -B 2880 -u 50 -H 0 -I 0 -A $DXLPATH/ -n 30:$DXLPATH/netbeacon_sonde.txt -g radiosondy.info:14580#m/1 -p $PASSCODE -w 14501 -v -D $DXLPATH/www/"' &
