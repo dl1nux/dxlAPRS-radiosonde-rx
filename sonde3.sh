@@ -22,7 +22,7 @@ while read line; do
 done < $DXLPATH/sondeconfig.txt
 
 # Wir beenden sicherheitshalber alle Prozesse die bereits laufen könnten
-killall -9 getalmd rtl_tcp sdrtst sondeudp sondemod udpbox udpgate4 
+killall -9 getalmd rtl_tcp sdrtst sondeudp sondemod udpbox udpgate4 dxlAPRS-SHUE
 sleep 1
 
 # getalmd lädt den aktuellen GPS Almanach (wird für RS92 Sonden benötigt).

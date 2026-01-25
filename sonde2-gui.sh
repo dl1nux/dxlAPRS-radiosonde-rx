@@ -22,7 +22,7 @@ while read line; do
 done < $DXLPATH/sondeconfig.txt
 
 # Wir beenden sicherheitshalber alle Prozesse die bereits laufen könnten
-killall -9 getalmd rtl_tcp sdrtst sondeudp sondemod udpbox udpgate4 
+killall -9 getalmd rtl_tcp sdrtst sondeudp sondemod udpbox udpgate4 dxlAPRS-SHUE
 sleep 1
 
 # getalmd lädt den aktuellen GPS Almanach (wird für RS92 Sonden benötigt).
@@ -71,7 +71,7 @@ sleep 1
 
 # Daten mit dxlAPRS-SHUE an sondehub.org senden (Die Kommandozeile muss dafür wieder einkommentiert werden [# entfernen am Zeilenanfang])
 # Weitere Parameter können bei Bedarf gesetzt werden, siehe https://github.com/Eshco93/dxlAPRS-SHUE
-#xfce4-terminal --minimize --title dxlAPRS-SHUE -e 'bash -c "python $DXLPATH/dxlAPRS-SHUE/dxlAPRS-SHUE.py -a 127.0.0.1 -p 18001 -k 0 -c $SONDECALL -l $LAT,$LON,$HOEHE -u $EMAIL &"' &
+#xfce4-terminal --minimize --title dxlAPRS-SHUE -e 'bash -c "python $DXLPATH/dxlAPRS-SHUE/dxlAPRS-SHUE.py -a 127.0.0.1 -p 18001 -k 0 -c $SONDECALL -l $LAT,$LON,$HOEHE -u $EMAIL"' &
 sleep 1
 
 # Verteilen der AXUDP Daten (UDPBOX)
