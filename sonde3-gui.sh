@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 #sleep 10
 # Wettersonden-Empfänger mit Weiterleitung zu radiosondy.info und wettersonde.net
+# Für die Weiterleitung der Daten an sondehub.org muss das Skript noch händisch editiert werden (siehe weiter unten im Abschnitt "dxlAPRS-SHUE")
 #----------------------------------------------------------------------------------------------------
 # Ausführliche Informationen unter: https://www.dl1nux.de/wettersonden-rx-mit-dxlaprs/
 # und in der Datei README.md
@@ -76,7 +77,12 @@ xfce4-terminal --title SONDEUDP2 -e 'bash -c "sondeudp -f 16000 -o $DXLPATH/sond
 sleep 1
 
 # Umwandeln der Sondendaten in AXUDP Format (SONDEMOD)
-xfce4-terminal --minimize --title SONDEMOD -e 'bash -c "sondemod -o 18000 -I $SONDECALL -r 127.0.0.1:9001 -b $INTERVALLHIGH:$INTERVALL1:$INTERVALL2:$INTERVALL3 -A $ALT1:$ALT2:$ALT3 -x /tmp/e.txt -T 360 -R 240 -d -p 2 -M -L 6=DFM06,7=PS15,A=DFM09,B=DFM17,C=DFM09P,D=DFM17,FF=DFMx -t $DXLPATH/sondecom.txt -v -P $LOCATOR -N $HOEHE -S $DXLPATH/"' &
+xfce4-terminal --minimize --title SONDEMOD -e 'bash -c "sondemod -o 18000 -I $SONDECALL -r 127.0.0.1:9001 -b $INTERVALLHIGH:$INTERVALL1:$INTERVALL2:$INTERVALL3 -A $ALT1:$ALT2:$ALT3 -x /tmp/e.txt -J 127.0.0.1:18001 -T 360 -R 240 -d -p 2 -M -L 6=DFM06,7=PS15,A=DFM09,B=DFM17,C=DFM09P,D=DFM17,FF=DFMx -t $DXLPATH/sondecom.txt -v -P $LOCATOR -N $HOEHE -S $DXLPATH/"' &
+sleep 1
+
+# Daten mit dxlAPRS-SHUE an sondehub.org senden (Die Kommandozeile muss dafür wieder einkommentiert werden [# entfernen am Zeilenanfang])
+# Weitere Parameter können bei Bedarf gesetzt werden, siehe https://github.com/Eshco93/dxlAPRS-SHUE
+#xfce4-terminal --minimize --title dxlAPRS-SHUE -e 'bash -c "python $DXLPATH/dxlAPRS-SHUE/dxlAPRS-SHUE.py -a 127.0.0.1 -p 18001 -k 0 -c $SONDECALL -l $LAT,$LON,$HOEHE -u $EMAIL &"' &
 sleep 1
 
 # Verteilen der AXUDP Daten (UDPBOX)
