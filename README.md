@@ -309,10 +309,10 @@ von Simon Schäfer verwendet: https://github.com/Eshco93/dxlAPRS-SHUE
 Kurzanleitung:
 
 1. Zunächst alle Systemupdates laden und einspielen
-
+'''
     sudo apt update
     sudo apt upgrade
-
+'''
 2. Python3 und benötigte Python Module installieren
 
     sudo apt install python3   (ist in Raspberry Pi OS bereits vorinstalliert)
