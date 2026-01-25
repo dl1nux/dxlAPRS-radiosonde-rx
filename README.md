@@ -110,11 +110,12 @@ deren Frequenzen immer anders sind und auch nicht vorhergesagt werden können.
 Die dxlAPRS Tools sind in der Lage die Signale dieser Sonden zu dekodieren,
 jedoch nur wenn man die Frequenzen händisch einpflegt.
 
-Von Wolfgang Hallmann DF7PN gibt es eine Anwendung, mit der man an einem extra
-Stick die Frequenzen regelmäßig abscannen kann um damit Sonden auf unbekannten
-Frequenzen zu finden. Mit etwas Geschick und viel Wissen kann man den 
-die vorliegenden Scripte auch mit dem Sondenscanner ergänzen.
-Weitere Infos: https://github.com/whallmann/SondenUtils
+Von DO2JMG gibt es einen Sondenscanner, der dieses Problem beseitig und auch
+neue Frequenzen findet und dem dxlAPRS Empfänger mitteilt. In meinem anderen
+Repository habe ich diesen Scanner mit eingebaut:
+
+https://github.com/dl1nux/dxlAPRS-radiosonde-rx-mit-scanner
+
 
 Für den Empfang von Sonden des Typs M10 sind Änderungen an der Konfiguration
 notwendig. Die Samplerate bei sdrtst und sondeudp muss dann mindestens 20000 Hz
@@ -310,7 +311,7 @@ Kurzanleitung:
 
 1. Zunächst alle Systemupdates laden und einspielen
 
-    sudo apt update
+    sudo apt update    
     sudo apt upgrade
 
 2. Python3 und benötigte Python Module installieren
