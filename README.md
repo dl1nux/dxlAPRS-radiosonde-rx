@@ -309,10 +309,12 @@ von Simon Schäfer verwendet: https://github.com/Eshco93/dxlAPRS-SHUE
 Kurzanleitung:
 
 1. Zunächst alle Systemupdates laden und einspielen
+
     sudo apt update
     sudo apt upgrade
 
 2. Python3 und benötigte Python Module installieren
+
     sudo apt install python3   (ist in Raspberry Pi OS bereits vorinstalliert)
     sudo apt install pip
     python -m pip install crc
@@ -327,6 +329,7 @@ können die zwei Module auch alternativ wie folgt installiert werden:
 3. dxlAPRS-SHUE installieren
 
 Ins dxlAPRS Programmverzeichnis wechseln - bzw. dorthin, wo die Startskripte liegen.
+
     cd ~/dxlAPRS/aprs/  (hier ggf. eigenen PFad angeben)
     git clone https://github.com/Eshco93/dxlAPRS-SHUE.git
 
@@ -337,6 +340,7 @@ standardmäßig auskommentiert, da ich nicht davon ausgehen kann, dass jeder die
 Installationen des zuzsätzlichen Codes durchgeführt hat.
 
 In den Startskripten sonde?.sh ist daher vor folgender Zeile das "#" zu entfernen:
+
     python dxlAPRS-SHUE/dxlAPRS-SHUE.py -a 127.0.0.1 -p 18001 -k 0 -c $SONDECALL ...
 
 In der sondeconfig.txt sind zwingend folgende Parameter für Sondehub sinnvoll zu 
