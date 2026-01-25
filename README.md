@@ -337,7 +337,7 @@ standardmäßig auskommentiert, da ich nicht davon ausgehen kann, dass jeder die
 Installationen des zuzsätzlichen Codes durchgeführt hat.
 
 In den Startskripten sonde?.sh ist daher vor folgender Zeile das "#" zu entfernen:
-> # python dxlAPRS-SHUE/dxlAPRS-SHUE.py -a 127.0.0.1 -p 18001 -k 0 -c $SONDECALL ...
+    # python dxlAPRS-SHUE/dxlAPRS-SHUE.py -a 127.0.0.1 -p 18001 -k 0 -c $SONDECALL ...
 
 In der sondeconfig.txt sind zwingend folgende Parameter für Sondehub sinnvoll zu 
 belegen, da sonst keine Verbindung zu sondehub.org hergestellt werden kann:
